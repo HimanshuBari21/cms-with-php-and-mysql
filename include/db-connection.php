@@ -1,6 +1,6 @@
 <?php
 
-include 'constants.php';
+include 'constants.env.php';
 
 // Create connection
 $connection = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DBNAME);
