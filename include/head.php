@@ -6,4 +6,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <title>Ox Corp - <?php echo $headTitle ?></title>
+
+    <style>
+        :root {
+            transition: all;
+            transition-duration: 1s;
+        }
+    </style>
 </head>

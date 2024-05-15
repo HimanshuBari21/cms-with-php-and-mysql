@@ -1,41 +1,37 @@
 <?php
-$headTitle = "Staff"
+
+$headTitle = "Staff";
+
+require_once "include/functions.php";
+require_once "include/db-connection.php";
+
+$subjectId = $_GET["subject"] ?? "";
+$pageId = $_GET["page"] ?? "";
+
 ?>
 
-<?php require_once("include/db-connection.php"); ?>
-
-<!DOCTYPE html>
-<html lang="en">
-    
-    <?php include "include/head.php"; ?>
-    
-<body>
-
-    <?php
-    include 'include/header.php'
-    ?>
+<?php
+include 'include/header.php'
+?>
 
 
-    <main class="container mx-auto py-12">
-    
-    <?php
+<main class="container mx-auto py-12 px-2 md:flex">
 
-    $result = mysqli_query($connection, 'SELECT * FROM subjects WHERE visible = 1 ORDER BY position ASC LIMIT 10');
+    <!-- navigation -->
+    <nav class="md:w-1/4">
+        <?php
+        navigation($subjectId, $pageId)
+        ?>
+    </nav>
 
-    foreach ($result as $key => $value) {
-        echo "<p>" . $value['menu_name'] . " - " . $value['position'] . "</p>";
-    }
+    <!-- content area -->
+    <section class="md:w-3/4">
+        <?php
+        contentArea($subjectId, $pageId)
+        ?>
+    </section>
 
-    ?>
+</main>
 
-    </main>
-
-    <?php
-    include 'include/footer.php'
-    ?>
-
-</body>
-
-</html>
-
-<?php require_once('include/close-connection.php') ?>
+<?php include 'include/footer.php' ?>
+<?php require_once 'include/close-connection.php' ?>
