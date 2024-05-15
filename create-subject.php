@@ -62,8 +62,8 @@ include 'include/header.php'
 
         ?>
 
-        <a class='hover:underline' href="/cms-with-php-and-mysql/content.php">Home</a>
-        <a class='hover:underline' href="/cms-with-php-and-mysql/new-subject.php">Add more subjects</a>
+        <a class='hover:underline btn' href="/cms-with-php-and-mysql/content.php">Home</a>
+        <a class='hover:underline btn' href="/cms-with-php-and-mysql/new-subject.php">Add more subjects</a>
 
     </div>
 

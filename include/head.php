@@ -8,9 +8,20 @@
     <title>Ox Corp - <?php echo $headTitle ?></title>
 
     <style>
-        :root {
-            transition: all;
-            transition-duration: 1s;
+        .btn {
+            max-width: 200px;
+            width: fit-content;
+            border: 2px solid dodgerblue;
+            padding: 3px 16px;
+            cursor: pointer;
+            border-radius: 60px;
+        }
+
+        .btn:hover {
+            background-color: dodgerblue;
+            color: white;
+            font-weight: 600;
         }
     </style>
+
 </head>

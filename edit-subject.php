@@ -36,12 +36,13 @@ if (isset($_POST['submit'])) {
         $updateSubjectsQueryResult = mysqli_query($connection, $updateSubjectsQuery);
 
         if ($updateSubjectsQueryResult) {
-            // success update0
+            $message = "Subject Update Success";
         } else {
-            // query failed
+            $message = "Subject Update Failed";
+            $message .= "<br />" . mysqli_error($connection);
         }
     } else {
-        // handle error here
+        $message = "The form has " . count($errors) . " error/s in form";
     }
 }
 
@@ -69,12 +70,26 @@ include 'include/header.php'
 
         <form action="/cms-with-php-and-mysql/edit-subject.php?subject=<?php echo $subjectId ?>" method="POST" class="flex flex-col gap-2 mt-6">
 
-            <label for="menu_name">
+            <?php
+            if (isset($message)) {
+                echo "<p class='mb-2 underline'>" . $message . "</p>";
+            }
+            if (!empty($errors)) {
+                echo "Please review the following fields";
+                echo "<ul>";
+                foreach ($errors as $value) {
+                    echo "<li>- {$value}</li>";
+                }
+                echo "</ul><br />";
+            }
+            ?>
+
+            <label for="menu_name" class=" text-lg">
                 Subject Name:
                 <input class="border border-gray-300 ml-4 px-2" type="text" name="menu_name" id="menu_name" value="<?php echo $subject["menu_name"] ?>">
             </label>
 
-            <label for="position">
+            <label for="position" class=" text-lg">
                 Position:
                 <select class="border border-gray-300 ml-4" type="number" name="position" id="position">
                     <?php
@@ -98,7 +113,7 @@ include 'include/header.php'
                 </select>
             </label>
 
-            <label for="visible">
+            <label for="visible" class=" text-lg">
                 Visible:
                 <label class="ml-4" for="true">
                     <input type="radio" name="visible" id="true" value="1" <?php echo $subject["visible"] == 1 ? 'checked' : '' ?>>
@@ -110,15 +125,18 @@ include 'include/header.php'
                 </label>
             </label>
 
-            <input value="Edit Subject" name="submit" type="submit"></input>
+            <br />
+
+            <input value="Edit Subject" class="btn" name="submit" type="submit" />
+            <a class="btn hover:!bg-red-500 border-red-500" href="/cms-with-php-and-mysql/delete-subject.php?subject=<?php echo urlencode($subjectId) ?>">Delete</a>
 
         </form>
+        <br />
+        <a class='hover:underline btn' href="/cms-with-php-and-mysql/content.php">Home</a>
 
     </section>
 
 
-    <a class='hover:underline' href="/cms-with-php-and-mysql/content.php">Home</a>
-    <a class='hover:underline' href="/cms-with-php-and-mysql/new-subject.php">Add more subjects</a>
 
 </main>
 

@@ -1,33 +1,33 @@
 <?php
 
-    $headTitle = "Home";
+$headTitle = "Home";
 
-    require_once "include/functions.php";
-    require_once "include/db-connection.php";
+require_once "include/functions.php";
+require_once "include/db-connection.php";
 
-    $subjectId = $_GET["subject"] ?? "";
-    $pageId = $_GET["page"] ?? "";
+$subjectId = $_GET["subject"] ?? "";
+$pageId = $_GET["page"] ?? "";
 
 ?>
 
 <?php
-    include 'include/header.php'
+include 'include/header.php'
 ?>
 
 
 <main class="container mx-auto py-12 md:flex">
-    
+
     <!-- navigation -->
     <nav class="w-1/4">
         <?php
-            navigation($subjectId, $pageId)
+        navigation($subjectId, $pageId)
         ?>
     </nav>
 
     <!-- content area -->
     <section class="w-3/4">
         <?php
-            contentArea($subjectId, $pageId)
+        contentArea($subjectId, $pageId)
         ?>
     </section>
 

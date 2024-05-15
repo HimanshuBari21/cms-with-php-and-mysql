@@ -68,12 +68,9 @@ include 'include/header.php'
                 </label>
             </label>
 
-            <input type="submit" value="Add Subject">
+            <input type="submit" class="btn" value="Add Subject" />
 
         </form>
-
-        <a class='hover:underline' href="/cms-with-php-and-mysql/content.php">Home</a>
-        <a class='hover:underline' href="/cms-with-php-and-mysql/new-subject.php">Add more subjects</a>
 
     </section>
 
