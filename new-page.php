@@ -28,10 +28,10 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($errors)) {
-        $menuName = $_POST['menu_name'];
-        $position = $_POST['position'];
-        $visible = $_POST['visible'];
-        $content = $_POST['content'];
+        $menuName = htmlspecialchars($_POST['menu_name']);
+        $position = htmlspecialchars($_POST['position']);
+        $visible = htmlspecialchars($_POST['visible']);
+        $content = htmlspecialchars($_POST['content']);
 
         $createPageQuery = "INSERT INTO pages (menu_name, subject_id, position, visible, content) VALUES ('{$menuName}', $subjectId, $position, $visible, '{$content}')";
 

@@ -28,9 +28,9 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($errors)) {
-        $menuName = $_POST['menu_name'];
-        $position = $_POST['position'];
-        $visible = $_POST['visible'];
+        $menuName = htmlspecialchars($_POST['menu_name']);
+        $position = htmlspecialchars($_POST['position']);
+        $visible = htmlspecialchars($_POST['visible']);
 
         $updateSubjectsQuery = "UPDATE subjects SET menu_name = '{$menuName}', position = {$position}, visible = {$visible} WHERE id = {$subjectId}";
         $updateSubjectsQueryResult = mysqli_query($connection, $updateSubjectsQuery);

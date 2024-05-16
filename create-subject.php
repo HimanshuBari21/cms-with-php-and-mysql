@@ -43,9 +43,9 @@ include 'include/header.php'
         }
 
         if (empty($errors)) {
-            $menuName = $_POST['menu_name'];
-            $position = $_POST['position'];
-            $visible = $_POST['visible'];
+            $menuName = htmlspecialchars($_POST['menu_name']);
+            $position = htmlspecialchars($_POST['position']);
+            $visible = htmlspecialchars($_POST['visible']);
 
             $createSubjectQuery = "INSERT INTO subjects (menu_name, position, visible) VALUES ('$menuName', $position, $visible)";
 

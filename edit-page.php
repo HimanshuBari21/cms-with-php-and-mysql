@@ -28,10 +28,10 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($errors)) {
-        $menuName = $_POST['menu_name'];
-        $position = $_POST['position'];
-        $visible = $_POST['visible'];
-        $content = $_POST['content'];
+        $menuName = htmlspecialchars($_POST['menu_name']);
+        $position = htmlspecialchars($_POST['position']);
+        $visible = htmlspecialchars($_POST['visible']);
+        $content = htmlspecialchars($_POST['content']);
 
         $createPageQuery = "UPDATE pages SET menu_name = '{$menuName}', position = $position, visible = $visible, content = '$content' WHERE id = $pageId";
 
