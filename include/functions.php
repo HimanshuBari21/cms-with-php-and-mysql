@@ -109,8 +109,17 @@ function publicNavigation($selSubjectId = 0, $selPageId = 0)
     foreach ($subjects as $subject) {
         if ($selSubjectId == $subject['id']) {
             $pages = getPagesBySubjectId($subject["id"], true);
+            $firstPageId = mysqli_fetch_assoc($pages)['id'] ?? [];
 
-            echo "<li class='!text-blue-600'><a title='Click to View' href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}&page=" . mysqli_fetch_assoc($pages)['id'] . "'>{$subject['menu_name']}</a></li>";
+            $subjectLink = "<li class='!text-blue-600'><a title='Click to View' href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}";
+
+            if (!empty($firstPageId)) {
+                $subjectLink .= "&page=$firstPageId";
+            }
+
+            $subjectLink .= "'>{$subject['menu_name']}</a></li>";
+
+            echo $subjectLink;
 
             // get list of pages as per subject id
 
@@ -125,7 +134,17 @@ function publicNavigation($selSubjectId = 0, $selPageId = 0)
             echo "</ul>";
         } else {
             $pages = getPagesBySubjectId($subject["id"], true);
-            echo "<li><a href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}&page=" . mysqli_fetch_assoc($pages)['id'] . "'>{$subject['menu_name']}</a></li>";
+            $firstPageId = mysqli_fetch_assoc($pages)['id'] ?? [];
+
+            $subjectLink = "<li><a title='Click to View' href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}";
+
+            if (!empty($firstPageId)) {
+                $subjectLink .= "&page=$firstPageId";
+            }
+
+            $subjectLink .= "'>{$subject['menu_name']}</a></li>";
+
+            echo $subjectLink;
         }
     }
 
@@ -144,13 +163,16 @@ function contentArea($selSubjectId, $selPageId)
 {
 
     if (!empty($selPageId)) {
-
         $page = getPageById($selPageId);
         echo "<h1 class='text-4xl mb-4'>" . $page["menu_name"] . "</h1>";
         echo "<p>" . $page["content"] . "</p>";
     } else if (!empty($selSubjectId)) {
         $page = mysqli_fetch_assoc(getPagesBySubjectId($selSubjectId, true));
-        contentArea($selSubjectId, $page['id']);
+        if (empty($page['id'])) {
+            echo "<h1 class='text-4xl mb-4'>No Pages Added for this Subject</h1>";
+        } else {
+            contentArea($selSubjectId, 1);
+        }
     } else {
 
         echo "Please select Subject or Page.";
