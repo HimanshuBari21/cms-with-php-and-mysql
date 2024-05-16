@@ -20,16 +20,9 @@ include 'include/header.php'
     <!-- navigation -->
     <nav class="md:w-1/4">
         <?php
-        navigation($subjectId, $pageId)
+        navigation($subjectId, $pageId, false)
         ?>
     </nav>
-
-    <!-- content area -->
-    <section class="md:w-3/4">
-        <?php
-        contentArea($subjectId, $pageId)
-        ?>
-    </section>
 
 </main>
 

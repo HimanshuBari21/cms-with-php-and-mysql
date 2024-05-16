@@ -3,18 +3,18 @@
 require_once "include/db-connection.php";
 require_once "include/functions.php";
 
-$subjectId = $_GET["subject"] ?? "";
+$pageId = $_GET["page"] ?? "";
 
-if (intval($_GET['subject']) == 0) {
+if (intval($_GET['page']) == 0) {
     header("location: /cms-with-php-and-mysql/content.php");
     exit();
 }
 
-$deleteSujectQuery = "DELETE FROM subjects WHERE id = {$subjectId} LIMIT 1";
-$deleteSujectQueryResult = mysqli_query($connection, $deleteSujectQuery);
+$deletePageQuery = "DELETE FROM pages WHERE id = {$pageId} LIMIT 1";
+$deletePageQueryResult = mysqli_query($connection, $deletePageQuery);
 
-if ($subject = getSubjectById($subjectId)) {
-    if ($deleteSujectQueryResult) {
+if ($page = getPageById($pageId)) {
+    if ($deletePageQueryResult) {
         echo "Record Deleted";
         header("location: /cms-with-php-and-mysql/content.php");
         exit();

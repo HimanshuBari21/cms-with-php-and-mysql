@@ -17,7 +17,7 @@ include 'include/header.php'
     <!-- navigation -->
     <nav class="md:w-1/4">
         <?php
-        navigation()
+        navigation(0, 0, false)
         ?>
     </nav>
 
@@ -57,11 +57,22 @@ include 'include/header.php'
                 echo "<p class='my-4'>Falied: " . mysqli_error($connection) . "</p>";
             }
         } else {
-            echo var_dump($errors);
+            echo "You has error in the following fields, please go back and correct them.";
+            echo "<br />Please review the following fields";
+            echo "<ul>";
+            foreach ($errors as $error) {
+                echo "<li>- " . $error . "</li>";
+            }
+            echo "</ul>";
         }
 
         ?>
-
+        <br>
+        <?php
+        if (!empty($errors)) {
+            echo "<a class='hover:underline btn' href='javascript:history.go(-1)'>Go back</a>";
+        }
+        ?>
         <a class='hover:underline btn' href="/cms-with-php-and-mysql/content.php">Home</a>
         <a class='hover:underline btn' href="/cms-with-php-and-mysql/new-subject.php">Add more subjects</a>
 

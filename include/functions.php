@@ -1,28 +1,35 @@
 <?php
 
-function getSubjects()
+function getSubjects($isPublic = false)
 {
 
     global $connection;
 
-    $subjectQuery = 'SELECT * FROM subjects 
-    ORDER BY position ASC';
+    $subjectQuery = 'SELECT * FROM subjects ';
+
+    if ($isPublic) {
+        $subjectQuery .= 'WHERE visible = 1 ';
+    }
+
+    $subjectQuery .= 'ORDER BY position ASC ';
 
     $subjects = mysqli_query($connection, $subjectQuery);
 
     return $subjects;
 };
 
-function getPagesBySubjectId($subId)
+function getPagesBySubjectId($subId, $isPublic = false)
 {
 
     global $connection;
 
-    $pagesQuery = "SELECT * FROM pages 
-     WHERE visible = 1 
-     AND subject_id = {$subId}
-     ORDER BY position 
-     ASC LIMIT 10";
+    $pagesQuery = "SELECT * FROM pages WHERE subject_id = {$subId} ";
+
+    if ($isPublic) {
+        $pagesQuery .= "AND visible = 1 ";
+    }
+
+    $pagesQuery .= "ORDER BY position ASC LIMIT 10";
 
     $pages = mysqli_query($connection, $pagesQuery);
 
@@ -53,7 +60,7 @@ function getPageById($id)
     return mysqli_fetch_assoc($page);
 }
 
-function navigation($selSubjectId = 0, $selPageId = 0)
+function staffNavigation($selSubjectId = 0, $selPageId = 0)
 {
     // get list of subjects
     $subjects = getSubjects();
@@ -61,7 +68,7 @@ function navigation($selSubjectId = 0, $selPageId = 0)
     echo "<ul class='text-xl font-semibold'>";
 
     if (empty(mysqli_fetch_row($subjects))) {
-        echo "<li class='py-6'>No Subjects</li>";
+        echo "<li class='py-6'>No Subjects Found - Please Add from below</li>";
     }
 
     foreach ($subjects as $subject) {
@@ -77,7 +84,7 @@ function navigation($selSubjectId = 0, $selPageId = 0)
 
         foreach ($pages as $page) {
             echo $selPageId == $page['id'] ? "<li class='text-blue-600'>" : "<li>";
-            echo "- <a title='Click to edit' class='hover:underline' href='/cms-with-php-and-mysql/content.php/?page={$page['id']}'>{$page['menu_name']}</a>";
+            echo "- <a title='Click to edit' class='hover:underline' href='/cms-with-php-and-mysql/edit-page.php/?page={$page['id']}'>{$page['menu_name']}</a>";
             echo "</li>";
         }
 
@@ -89,20 +96,60 @@ function navigation($selSubjectId = 0, $selPageId = 0)
     echo "</ul>";
 }
 
+function publicNavigation($selSubjectId = 0, $selPageId = 0)
+{
+    $subjects = getSubjects(true);
+
+    echo "<ul class='text-xl font-semibold'>";
+
+    if (empty(mysqli_fetch_row($subjects))) {
+        echo "<li class='py-6'>No Subjects Found - Please Add from below</li>";
+    }
+
+    foreach ($subjects as $subject) {
+        if ($selSubjectId == $subject['id']) {
+            echo "<li class='!text-blue-600'><a title='Click to View' href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}'>{$subject['menu_name']}</a></li>";
+
+            // get list of pages as per subject id
+            $pages = getPagesBySubjectId($subject["id"], true);
+
+            echo "<ul class='ml-4 mb-2 text-base font-normal'>";
+
+            foreach ($pages as $page) {
+                echo $selPageId == $page['id'] ? "<li class='text-blue-600'>" : "<li>";
+                echo "- <a title='Click to View' class='hover:underline' href='/cms-with-php-and-mysql/index.php/?subject={$selSubjectId}&page={$page['id']}'>{$page['menu_name']}</a>";
+                echo "</li>";
+            }
+
+            echo "</ul>";
+        } else {
+            echo "<li><a href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}'>{$subject['menu_name']}</a></li>";
+        }
+    }
+
+    // echo "<a href='/cms-with-php-and-mysql/new-subject.php'>+ Add new Subject</a>";
+
+    echo "</ul>";
+}
+
+// intermidiater functions
+function navigation($selSubjectId = 0, $selPageId = 0, $isPublic = true)
+{
+    $isPublic ? publicNavigation($selSubjectId, $selPageId) : staffNavigation($selSubjectId, $selPageId);
+}
+
 function contentArea($selSubjectId, $selPageId)
 {
 
-    if (!empty($selSubjectId)) {
-
-        $subject = getSubjectById($selSubjectId);
-
-        echo "<h1 class='text-4xl mb-4'>" . $subject["menu_name"] . "</h1>";
-    } else if (!empty($selPageId)) {
+    if (!empty($selPageId)) {
 
         $page = getPageById($selPageId);
-
         echo "<h1 class='text-4xl mb-4'>" . $page["menu_name"] . "</h1>";
         echo "<p>" . $page["content"] . "</p>";
+    } else if (!empty($selSubjectId)) {
+
+        $subject = getSubjectById($selSubjectId);
+        echo "<h1 class='text-4xl mb-4'>" . $subject["menu_name"] . "</h1>";
     } else {
 
         echo "Please select Subject or Page.";

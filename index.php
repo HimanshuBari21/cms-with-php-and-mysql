@@ -15,19 +15,19 @@ include 'include/header.php'
 ?>
 
 
-<main class="container mx-auto py-12 md:flex">
+<main class="container mx-auto py-12 md:flex md:gap-0 px-2">
 
     <!-- navigation -->
-    <nav class="w-1/4">
+    <nav class="md:w-1/4">
         <?php
-        navigation($subjectId, $pageId)
+        navigation($subjectId, $pageId);
         ?>
     </nav>
 
     <!-- content area -->
-    <section class="w-3/4">
+    <section class="md:w-3/4">
         <?php
-        contentArea($subjectId, $pageId)
+        contentArea($subjectId, $pageId);
         ?>
     </section>
 

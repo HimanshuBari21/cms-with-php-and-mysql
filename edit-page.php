@@ -1,17 +1,17 @@
 <?php
 
-$headTitle = "Edit Subject";
+$headTitle = "Edit Page";
 
 require_once "include/functions.php";
 require_once "include/db-connection.php";
 
-$subjectId = $_GET["subject"] ?? "";
+$pageId = $_GET["page"] ?? "";
 
 if (isset($_POST['submit'])) {
 
     $errors = [];
 
-    $requiredFields = ['menu_name', 'position', 'visible'];
+    $requiredFields = ['menu_name', 'position', 'visible', 'content'];
 
     foreach ($requiredFields as $fieldName) {
         if (!isset($_POST["$fieldName"]) || (empty($_POST["$fieldName"]) && $_POST["$fieldName"] != 0)) {
@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    $maxLengthFields = array('menu_name' => 30);
+    $maxLengthFields = array('menu_name' => 30, 'content' => 500);
 
     foreach ($maxLengthFields as $fieldName => $value) {
         if (strlen(($_POST[$fieldName])) > $value) {
@@ -31,44 +31,45 @@ if (isset($_POST['submit'])) {
         $menuName = $_POST['menu_name'];
         $position = $_POST['position'];
         $visible = $_POST['visible'];
+        $content = $_POST['content'];
 
-        $updateSubjectsQuery = "UPDATE subjects SET menu_name = '{$menuName}', position = {$position}, visible = {$visible} WHERE id = {$subjectId}";
-        $updateSubjectsQueryResult = mysqli_query($connection, $updateSubjectsQuery);
+        $createPageQuery = "UPDATE pages SET menu_name = '{$menuName}', position = $position, visible = $visible, content = '$content' WHERE id = $pageId";
 
-        if ($updateSubjectsQueryResult) {
-            $message = "Subject Update Success";
+        $createPageQueryResult = mysqli_query($connection, $createPageQuery);
+
+        if ($createPageQueryResult) {
+            $message = "Page Added Successfully";
         } else {
-            $message = "Subject Update Failed";
+            $message = "Page Adding Failed";
             $message .= "<br />" . mysqli_error($connection);
         }
     } else {
         $message = "The form has " . count($errors) . " error/s in form";
     }
 }
-
 ?>
 
 <?php
-include 'include/header.php'
-?>
+include 'include/header.php';
 
+?>
 
 <main class="container mx-auto py-12 md:flex md:gap-0 gap-6 px-2">
 
     <!-- navigation -->
     <nav class="md:w-1/4">
         <?php
-        navigation($subjectId, 0, false);
-        $subject = getSubjectById($subjectId);
+        navigation(0, $pageId, false);
+        $page = getPageById($pageId);
         ?>
     </nav>
 
     <!-- add new subject area -->
     <section class="md:w-3/4">
 
-        <h2 class="text-3xl">Edit Subject: <?php echo $subject["menu_name"] ?></h2>
+        <h2 class="text-3xl">Edit Page: </h2>
 
-        <form action="/cms-with-php-and-mysql/edit-subject.php?subject=<?php echo $subjectId ?>" method="POST" class="flex flex-col gap-2 mt-6">
+        <form action="/cms-with-php-and-mysql/edit-page.php?page=<?php echo urlencode($pageId) ?>" method="POST" class="flex flex-col gap-2 mt-6">
 
             <?php
             if (isset($message)) {
@@ -85,8 +86,8 @@ include 'include/header.php'
             ?>
 
             <label for="menu_name" class=" text-lg">
-                Subject Name:
-                <input class="border border-gray-300 ml-4 px-2" type="text" name="menu_name" id="menu_name" value="<?php echo $subject["menu_name"] ?>" required maxlength="30">
+                Page Name:
+                <input class="border border-gray-300 ml-4 px-2" type="text" name="menu_name" id="menu_name" value="<?php echo $page['menu_name'] ?>" required maxlength="30">
             </label>
 
             <label for="position" class=" text-lg">
@@ -94,19 +95,19 @@ include 'include/header.php'
                 <select class="border border-gray-300 ml-4" type="number" name="position" id="position" required>
                     <?php
 
-                    $subjects = getSubjects();
-                    $numberOfSubjects = mysqli_num_rows($subjects);
+                    $pages = getPagesBySubjectId($page['subject_id']);
+                    $numberOfPages = mysqli_num_rows($pages);
 
                     $i = 1;
 
                     do {
-                        if ($subject["position"] == $i) {
+                        if ($page["position"] == $i) {
                             echo "<option selected value='{$i}'>{$i}</option>";
                         } else {
                             echo "<option value='{$i}'>{$i}</option>";
                         }
                         $i++;
-                    } while ($i <= $numberOfSubjects);
+                    } while ($i <= $numberOfPages);
 
                     ?>
 
@@ -116,30 +117,34 @@ include 'include/header.php'
             <label for="visible" class=" text-lg">
                 Visible:
                 <label class="ml-4" for="true">
-                    <input type="radio" name="visible" id="true" value="1" <?php echo $subject["visible"] == 1 ? 'checked' : '' ?> required>
+                    <input type="radio" name="visible" id="true" value="1" <?php echo $page["visible"] == 1 ? 'checked' : '' ?> required>
                     Yes
                 </label>
                 <label class="ml-4" for="false">
-                    <input type="radio" name="visible" id="false" value="0" <?php echo $subject["visible"] == 1 ? '' : 'checked' ?> required>
+                    <input type="radio" name="visible" id="false" value="0" <?php echo $page["visible"] == 1 ? '' : 'checked' ?> required>
                     No
                 </label>
             </label>
 
+            <label for="content" class=" text-lg">
+                Content:
+                <br>
+                <textarea class="border border-gray-300 w-full px-2" rows="5" type="text" name="content" id="content" required maxlength="500"><?php echo $page['content'] ?></textarea>
+            </label>
+
             <br />
 
-            <input value="Edit Subject" class="btn" name="submit" type="submit" />
-            <a href="/cms-with-php-and-mysql/new-page.php?subject=<?php echo urlencode($subjectId) ?>" class="btn">Add Page</a>
-            <a class="btn hover:!bg-red-500 border-red-500" href="/cms-with-php-and-mysql/delete-subject.php?subject=<?php echo urlencode($subjectId) ?>">Delete</a>
+            <input value="Update Page" class="btn" name="submit" type="submit" />
+            <a class='hover:underline btn hover:!bg-red-500 border-red-500' href="/cms-with-php-and-mysql/delete-page.php?page=<?php echo urlencode($pageId) ?>">Delete Page</a>
 
         </form>
         <br />
         <a class='hover:underline btn' href="/cms-with-php-and-mysql/content.php">Home</a>
 
     </section>
-
-
-
 </main>
+
+<!-- <?php echo $subjectId ?> -->
 
 <?php include 'include/footer.php' ?>
 <?php require_once 'include/close-connection.php' ?>

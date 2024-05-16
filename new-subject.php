@@ -20,7 +20,7 @@ include 'include/header.php'
     <!-- navigation -->
     <nav class="md:w-1/4">
         <?php
-        navigation($subjectId, $pageId)
+        navigation($subjectId, $pageId, false)
         ?>
     </nav>
 
@@ -33,12 +33,12 @@ include 'include/header.php'
 
             <label for="menu_name">
                 Subject Name:
-                <input class="border border-gray-300 ml-4" type="text" name="menu_name" id="menu_name">
+                <input class="border border-gray-300 ml-4" type="text" name="menu_name" id="menu_name" required maxlength="30">
             </label>
 
             <label for="position">
                 Position:
-                <select class="border border-gray-300 ml-4" type="number" name="position" id="position">
+                <select class="border border-gray-300 ml-4" type="number" name="position" id="position" required>
                     <?php
 
                     $subjects = getSubjects();
@@ -59,11 +59,11 @@ include 'include/header.php'
             <label for="visible">
                 Visible:
                 <label class="ml-4" for="true">
-                    <input type="radio" name="visible" id="true" value="1">
+                    <input type="radio" name="visible" id="true" value="1" required>
                     Yes
                 </label>
                 <label class="ml-4" for="false">
-                    <input type="radio" name="visible" id="false" value="0">
+                    <input type="radio" name="visible" id="false" value="0" required>
                     No
                 </label>
             </label>
