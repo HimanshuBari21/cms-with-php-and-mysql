@@ -108,10 +108,11 @@ function publicNavigation($selSubjectId = 0, $selPageId = 0)
 
     foreach ($subjects as $subject) {
         if ($selSubjectId == $subject['id']) {
-            echo "<li class='!text-blue-600'><a title='Click to View' href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}'>{$subject['menu_name']}</a></li>";
+            $pages = getPagesBySubjectId($subject["id"], true);
+
+            echo "<li class='!text-blue-600'><a title='Click to View' href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}&page=" . mysqli_fetch_assoc($pages)['id'] . "'>{$subject['menu_name']}</a></li>";
 
             // get list of pages as per subject id
-            $pages = getPagesBySubjectId($subject["id"], true);
 
             echo "<ul class='ml-4 mb-2 text-base font-normal'>";
 
@@ -123,7 +124,8 @@ function publicNavigation($selSubjectId = 0, $selPageId = 0)
 
             echo "</ul>";
         } else {
-            echo "<li><a href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}'>{$subject['menu_name']}</a></li>";
+            $pages = getPagesBySubjectId($subject["id"], true);
+            echo "<li><a href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}&page=" . mysqli_fetch_assoc($pages)['id'] . "'>{$subject['menu_name']}</a></li>";
         }
     }
 
@@ -147,9 +149,8 @@ function contentArea($selSubjectId, $selPageId)
         echo "<h1 class='text-4xl mb-4'>" . $page["menu_name"] . "</h1>";
         echo "<p>" . $page["content"] . "</p>";
     } else if (!empty($selSubjectId)) {
-
-        $subject = getSubjectById($selSubjectId);
-        echo "<h1 class='text-4xl mb-4'>" . $subject["menu_name"] . "</h1>";
+        $page = mysqli_fetch_assoc(getPagesBySubjectId($selSubjectId, true));
+        contentArea($selSubjectId, $page['id']);
     } else {
 
         echo "Please select Subject or Page.";
