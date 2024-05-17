@@ -6,7 +6,7 @@ require_once "include/functions.php";
 $pageId = $_GET["page"] ?? "";
 
 if (intval($_GET['page']) == 0) {
-    header("location: /cms-with-php-and-mysql/content.php");
+    header("location: /cms/content.php");
     exit();
 }
 
@@ -16,7 +16,7 @@ $deletePageQueryResult = mysqli_query($connection, $deletePageQuery);
 if ($page = getPageById($pageId)) {
     if ($deletePageQueryResult) {
         echo "Record Deleted";
-        header("location: /cms-with-php-and-mysql/content.php");
+        header("location: /cms/content.php");
         exit();
     } else {
         // deletion failed
@@ -25,7 +25,7 @@ if ($page = getPageById($pageId)) {
     }
 } else {
     // subject didn't exist
-    header("location: /cms-with-php-and-mysql/content.php");
+    header("location: /cms/content.php");
     exit();
 }
 

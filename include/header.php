@@ -8,7 +8,7 @@
 
     <header class="bg-blue-600 p-4">
         <div class="container mx-auto md:flex justify-between items-center">
-            <a href="/cms-with-php-and-mysql/">
+            <a href="/cms/">
                 <h1 class="text-white text-2xl font-bold">Ox Corp</h1>
             </a>
         </div>

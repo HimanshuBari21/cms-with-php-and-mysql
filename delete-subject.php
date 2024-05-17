@@ -6,7 +6,7 @@ require_once "include/functions.php";
 $subjectId = $_GET["subject"] ?? "";
 
 if (intval($_GET['subject']) == 0) {
-    header("location: /cms-with-php-and-mysql/content.php");
+    header("location: /cms/content.php");
     exit();
 }
 
@@ -16,7 +16,7 @@ $deleteSujectQueryResult = mysqli_query($connection, $deleteSujectQuery);
 if ($subject = getSubjectById($subjectId)) {
     if ($deleteSujectQueryResult) {
         echo "Record Deleted";
-        header("location: /cms-with-php-and-mysql/content.php");
+        header("location: /cms/content.php");
         exit();
     } else {
         // deletion failed
@@ -25,7 +25,7 @@ if ($subject = getSubjectById($subjectId)) {
     }
 } else {
     // subject didn't exist
-    header("location: /cms-with-php-and-mysql/content.php");
+    header("location: /cms/content.php");
     exit();
 }
 

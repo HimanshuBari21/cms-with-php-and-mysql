@@ -69,7 +69,7 @@ include 'include/header.php';
 
         <h2 class="text-3xl">Edit Page: </h2>
 
-        <form action="/cms-with-php-and-mysql/edit-page.php?page=<?php echo urlencode($pageId) ?>" method="POST" class="flex flex-col gap-2 mt-6">
+        <form action="/cms/edit-page.php?page=<?php echo urlencode($pageId) ?>" method="POST" class="flex flex-col gap-2 mt-6">
 
             <?php
             if (isset($message)) {
@@ -135,11 +135,11 @@ include 'include/header.php';
             <br />
 
             <input value="Update Page" class="btn" name="submit" type="submit" />
-            <a class='hover:underline btn hover:!bg-red-500 border-red-500' href="/cms-with-php-and-mysql/delete-page.php?page=<?php echo urlencode($pageId) ?>">Delete Page</a>
+            <a class='hover:underline btn hover:!bg-red-500 border-red-500' href="/cms/delete-page.php?page=<?php echo urlencode($pageId) ?>">Delete Page</a>
 
         </form>
         <br />
-        <a class='hover:underline btn' href="/cms-with-php-and-mysql/content.php">Home</a>
+        <a class='hover:underline btn' href="/cms/content.php">Home</a>
 
     </section>
 </main>

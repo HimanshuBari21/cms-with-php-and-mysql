@@ -29,7 +29,7 @@ include 'include/header.php'
 
         <h2 class="text-3xl">Create a new subject</h2>
 
-        <form action="/cms-with-php-and-mysql/create-subject.php" method="post" class="flex flex-col gap-2 mt-6">
+        <form action="/cms/create-subject.php" method="post" class="flex flex-col gap-2 mt-6">
 
             <label for="menu_name">
                 Subject Name:

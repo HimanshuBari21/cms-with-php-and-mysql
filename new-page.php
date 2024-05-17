@@ -69,7 +69,7 @@ include 'include/header.php';
         <h2 class="text-3xl">New Page</h2>
         <p>For Subejct id: <?php echo $subjectId ?></p>
 
-        <form action="/cms-with-php-and-mysql/new-page.php?subject=<?php echo $subjectId ?>" method="POST" class="flex flex-col gap-2 mt-6">
+        <form action="/cms/new-page.php?subject=<?php echo $subjectId ?>" method="POST" class="flex flex-col gap-2 mt-6">
 
             <?php
             if (isset($message)) {
@@ -134,7 +134,7 @@ include 'include/header.php';
 
         </form>
         <br />
-        <a class='hover:underline btn' href="/cms-with-php-and-mysql/content.php">Home</a>
+        <a class='hover:underline btn' href="/cms/content.php">Home</a>
 
     </section>
 </main>

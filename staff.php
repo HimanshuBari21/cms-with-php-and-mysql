@@ -26,9 +26,9 @@ include 'include/header.php'
         <legend class="font-bold text-3xl">Welcome to Staff Area</legend>
         <br>
         <ul class="ml-2">
-            <li> - <a class="hover:underline" href="/cms-with-php-and-mysql/content.php">Manage Content</a></li>
-            <li> - <a class="hover:underline" href="/cms-with-php-and-mysql/content.php">Add Staff User</a></li>
-            <li> - <a class="hover:underline" href="/cms-with-php-and-mysql/content.php">Logout</a></li>
+            <li> - <a class="hover:underline" href="/cms/content.php">Manage Content</a></li>
+            <li> - <a class="hover:underline" href="/cms/content.php">Add Staff User</a></li>
+            <li> - <a class="hover:underline" href="/cms/content.php">Logout</a></li>
         </ul>
     </section>
 

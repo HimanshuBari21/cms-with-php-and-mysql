@@ -74,7 +74,7 @@ function staffNavigation($selSubjectId = 0, $selPageId = 0)
     foreach ($subjects as $subject) {
 
         echo $selSubjectId == $subject['id'] ? "<li class='text-blue-600'>" : "<li>";
-        echo "<a title='Click to edit' class='hover:underline' href='/cms-with-php-and-mysql/edit-subject.php/?subject={$subject['id']}'>{$subject['menu_name']}</a>";
+        echo "<a title='Click to edit' class='hover:underline' href='/cms/edit-subject.php/?subject={$subject['id']}'>{$subject['menu_name']}</a>";
         echo "</li>";
 
         // get list of pages as per subject id
@@ -84,14 +84,14 @@ function staffNavigation($selSubjectId = 0, $selPageId = 0)
 
         foreach ($pages as $page) {
             echo $selPageId == $page['id'] ? "<li class='text-blue-600'>" : "<li>";
-            echo "- <a title='Click to edit' class='hover:underline' href='/cms-with-php-and-mysql/edit-page.php/?page={$page['id']}'>{$page['menu_name']}</a>";
+            echo "- <a title='Click to edit' class='hover:underline' href='/cms/edit-page.php/?page={$page['id']}'>{$page['menu_name']}</a>";
             echo "</li>";
         }
 
         echo "</ul>";
     }
 
-    echo "<a href='/cms-with-php-and-mysql/new-subject.php'>+ Add new Subject</a>";
+    echo "<a href='/cms/new-subject.php'>+ Add new Subject</a>";
 
     echo "</ul>";
 }
@@ -111,7 +111,7 @@ function publicNavigation($selSubjectId = 0, $selPageId = 0)
             $pages = getPagesBySubjectId($subject["id"], true);
             $firstPageId = mysqli_fetch_assoc($pages)['id'] ?? [];
 
-            $subjectLink = "<li class='!text-blue-600'><a title='Click to View' href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}";
+            $subjectLink = "<li class='!text-blue-600'><a title='Click to View' href='/cms/index.php/?subject={$subject['id']}";
 
             if (!empty($firstPageId)) {
                 $subjectLink .= "&page=$firstPageId";
@@ -127,7 +127,7 @@ function publicNavigation($selSubjectId = 0, $selPageId = 0)
 
             foreach ($pages as $page) {
                 echo $selPageId == $page['id'] ? "<li class='text-blue-600'>" : "<li>";
-                echo "- <a title='Click to View' class='hover:underline' href='/cms-with-php-and-mysql/index.php/?subject={$selSubjectId}&page={$page['id']}'>{$page['menu_name']}</a>";
+                echo "- <a title='Click to View' class='hover:underline' href='/cms/index.php/?subject={$selSubjectId}&page={$page['id']}'>{$page['menu_name']}</a>";
                 echo "</li>";
             }
 
@@ -136,7 +136,7 @@ function publicNavigation($selSubjectId = 0, $selPageId = 0)
             $pages = getPagesBySubjectId($subject["id"], true);
             $firstPageId = mysqli_fetch_assoc($pages)['id'] ?? [];
 
-            $subjectLink = "<li><a title='Click to View' href='/cms-with-php-and-mysql/index.php/?subject={$subject['id']}";
+            $subjectLink = "<li><a title='Click to View' href='/cms/index.php/?subject={$subject['id']}";
 
             if (!empty($firstPageId)) {
                 $subjectLink .= "&page=$firstPageId";
@@ -148,7 +148,7 @@ function publicNavigation($selSubjectId = 0, $selPageId = 0)
         }
     }
 
-    // echo "<a href='/cms-with-php-and-mysql/new-subject.php'>+ Add new Subject</a>";
+    // echo "<a href='/cms/new-subject.php'>+ Add new Subject</a>";
 
     echo "</ul>";
 }

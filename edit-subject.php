@@ -68,7 +68,7 @@ include 'include/header.php'
 
         <h2 class="text-3xl">Edit Subject: <?php echo $subject["menu_name"] ?></h2>
 
-        <form action="/cms-with-php-and-mysql/edit-subject.php?subject=<?php echo $subjectId ?>" method="POST" class="flex flex-col gap-2 mt-6">
+        <form action="/cms/edit-subject.php?subject=<?php echo $subjectId ?>" method="POST" class="flex flex-col gap-2 mt-6">
 
             <?php
             if (isset($message)) {
@@ -128,12 +128,12 @@ include 'include/header.php'
             <br />
 
             <input value="Edit Subject" class="btn" name="submit" type="submit" />
-            <a href="/cms-with-php-and-mysql/new-page.php?subject=<?php echo urlencode($subjectId) ?>" class="btn">Add Page</a>
-            <a class="btn hover:!bg-red-500 border-red-500" href="/cms-with-php-and-mysql/delete-subject.php?subject=<?php echo urlencode($subjectId) ?>">Delete</a>
+            <a href="/cms/new-page.php?subject=<?php echo urlencode($subjectId) ?>" class="btn">Add Page</a>
+            <a class="btn hover:!bg-red-500 border-red-500" href="/cms/delete-subject.php?subject=<?php echo urlencode($subjectId) ?>">Delete</a>
 
         </form>
         <br />
-        <a class='hover:underline btn' href="/cms-with-php-and-mysql/content.php">Home</a>
+        <a class='hover:underline btn' href="/cms/content.php">Home</a>
 
     </section>
 
