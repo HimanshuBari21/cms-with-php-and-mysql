@@ -1,5 +1,7 @@
 <?php
 
+require_once 'include/session.php';
+
 require_once "include/db-connection.php";
 require_once "include/functions.php";
 

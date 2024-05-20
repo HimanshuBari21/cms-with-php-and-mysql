@@ -1,7 +1,13 @@
 <?php
 
+session_start();
 
-$headTitle = "User User";
+if (isset($_SESSION['id'])) {
+    header("location: /cms/staff.php");
+    exit();
+}
+
+$headTitle = "Login User";
 
 require_once "include/functions.php";
 require_once "include/db-connection.php";
@@ -26,14 +32,21 @@ if (isset($_POST['submit'])) {
         $namak = '$#7ub5';
         $hashedPassword = sha1($password . $namak);
 
-        $signupQuery = "INSERT INTO users (username, hashed_password) VALUES ('{$username}', '{$hashedPassword}')";
+        $signinQuery = "SELECT * FROM users WHERE username = '{$username}' AND hashed_password = '{$hashedPassword}'";
 
-        $signupQueryResult = mysqli_query($connection, $signupQuery);
+        $signinQueryResult = mysqli_query($connection, $signinQuery);
 
-        if ($signupQueryResult) {
-            $message = "<p>Sign up Success! Please <a class='underline' href='/cms/login-user.php'>Login</a><p>";
+        if ($signinQueryResult->num_rows == 1) {
+
+            $foundUser = mysqli_fetch_assoc($signinQueryResult);
+
+            $_SESSION['id'] = $foundUser['id'];
+            $_SESSION['username'] = $foundUser['username'];
+
+            header("location: /cms/staff.php");
+            exit();
         } else {
-            $message = "Sign up failed: " . mysqli_error($connection);
+            $message = "Bad Credentials! Please check capslock and numlock" . mysqli_error($connection);
         }
     }
 }
@@ -54,8 +67,8 @@ include 'include/header.php'
     </nav>
 
     <section class="md:w-3/4">
-        <form action="/cms/new-user.php" method="post">
-            <legend class="text-3xl font-bold">User Sign up</legend>
+        <form action="/cms/login-user.php" method="post">
+            <legend class="text-3xl font-bold">User Sign in</legend>
 
             <?php echo isset($message) ? "<p class='my-2'>{$message}</p>" : "" ?>
 
@@ -73,14 +86,14 @@ include 'include/header.php'
                 </li>
 
                 <li>
-                    <input type="submit" value="Sign up" name="submit" class="btn">
+                    <input type="submit" value="Sign in" name="submit" class="btn">
                 </li>
             </ul>
         </form>
         <br>
         <p>
-            Already signup ?
-            <a class="hover:underline" href="/cms/login-user.php">Login</a>
+            Don't have Account?
+            <a class="hover:underline" href="/cms/new-user.php">Sign up</a>
         </p>
     </section>
 

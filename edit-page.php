@@ -1,5 +1,7 @@
 <?php
 
+require_once 'include/session.php';
+
 $headTitle = "Edit Page";
 
 require_once "include/functions.php";
