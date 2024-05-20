@@ -91,7 +91,8 @@ function staffNavigation($selSubjectId = 0, $selPageId = 0)
         echo "</ul>";
     }
 
-    echo "<a href='/cms/new-subject.php'>+ Add new Subject</a>";
+    echo "<a class='hover:underline' href='/cms/new-subject.php'>+ Add new Subject</a><br />";
+    echo "<a class='hover:underline' href='/cms/logout.php'> * Log out</a>";
 
     echo "</ul>";
 }

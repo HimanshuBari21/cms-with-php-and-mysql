@@ -71,6 +71,7 @@ include 'include/header.php'
             <legend class="text-3xl font-bold">User Sign in</legend>
 
             <?php echo isset($message) ? "<p class='my-2'>{$message}</p>" : "" ?>
+            <?php echo isset($_GET['logout']) ? "<p class='my-2'>Log out Successfully</p>" : "" ?>
 
             <br />
             <ul class="flex flex-col gap-4">

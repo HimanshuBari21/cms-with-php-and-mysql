@@ -32,7 +32,7 @@ include 'include/header.php'
         <ul class="ml-2">
             <li> - <a class="hover:underline" href="/cms/content.php">Manage Content</a></li>
             <li> - <a class="hover:underline" href="/cms/new-user.php">Add Staff User</a></li>
-            <li> - <a class="hover:underline" href="/cms/content.php">Logout</a></li>
+            <li> - <a class="hover:underline" href="/cms/logout.php">Logout</a></li>
         </ul>
     </section>
 
